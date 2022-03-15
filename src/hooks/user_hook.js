@@ -1,6 +1,14 @@
 import { ref, onUnmounted } from "vue";
 import { db } from "../firebase/index";
-import { collection, addDoc, getDocs, onSnapshot } from "firebase/firestore";
+import {
+  getDoc,
+  doc,
+  collection,
+  addDoc,
+  updateDoc,
+  onSnapshot,
+  deleteDoc,
+} from "firebase/firestore";
 
 //get ref 'users' collection
 const usersCollection = collection(db, "users");
@@ -13,17 +21,22 @@ export const createUser = async (user) => {
 
 //get user if exist in the collection
 export const getUser = async (id) => {
-  const user = await usersCollection.doc(id).get();
-  return user.exists ? user.data() : null;
+  const docRef = doc(db, "users", id);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data();
+  }
 };
 
 //update user
 export const updateUser = (id, user) => {
-  return usersCollection.doc(id).update(user);
+  const docRef = doc(db, "users", id);
+  return updateDoc(docRef, user);
 };
 //delete user
 export const deleteUser = (id) => {
-  return usersCollection.doc(id).delete();
+  const docRef = doc(db, "users", id);
+  return deleteDoc(docRef);
 };
 
 // watch if update and return changes

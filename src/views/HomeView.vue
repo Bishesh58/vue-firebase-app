@@ -1,12 +1,13 @@
 <script setup>
 import CreateUserForm from '../components/CreateUserForm.vue';
-
+import UserList from '../components/UserList.vue'
 </script>
 
 <template>
   <main>
-    <!-- main contain will go here -->
-    <h1>you are watching home view.. </h1>
+    <!-- main contain on home view -->
     <CreateUserForm/>
+    <br>
+    <UserList/>
   </main>
 </template>
